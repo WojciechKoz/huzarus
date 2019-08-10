@@ -1,4 +1,6 @@
 from itertools import product
+import pandas as pd
+
 
 conjunctions = {    # you can change second element of each pair 
     "and": "and",   # it depends on input e.g. when you use ^ as 'and' operator
@@ -55,13 +57,20 @@ def tree_valuation(tree):
     clear_old_values(tree.root)
     leaves = find_tree_leaves(tree.root)
     variables_names = {var.form for var in leaves}
+
+    output = {var_name:[] for var_name in variables_names}
+    output["result"] = []
+
     for variables_values in product([False, True], repeat=len(variables_names)):
         variables_relation = {key:value for key, value in zip(variables_names, variables_values)}
 
         # fill all leaves with given variable values
         for leaf in leaves:
             leaf.value = variables_relation[leaf.form]
-         
-        print("{:40} gives {}".format(str(variables_relation), evaluate(tree.root)))
 
+        for name, value in variables_relation.items():
+            output[name].append(value)
+        output["result"].append(evaluate(tree.root)) 
+
+    return pd.DataFrame(output)
 

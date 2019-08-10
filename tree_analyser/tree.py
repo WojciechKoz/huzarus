@@ -11,40 +11,32 @@ class PropositionalFormulaTree:
     def __init__(self, postfix):
         self.root = self.Element(postfix.pop())
         self.root.right = self.Element(postfix.pop())
-        if self.isOperator(self.root.right.form):  self.setTree(self.root.right, postfix)
+        if self.is_operator(self.root.right.form):  self.set_tree(self.root.right, postfix)
         self.root.left = self.Element(postfix.pop())
-        if self.isOperator(self.root.left.form):  self.setTree(self.root.left, postfix)
+        if self.is_operator(self.root.left.form):  self.set_tree(self.root.left, postfix)
 
 
-    def isOperator(self, op):
+    def is_operator(self, op):
         return op in ("or", "and", "not")
 
 
-    def setTree(self, element, postfix):
+    def set_tree(self, element, postfix):
         if element.form == "not":
             element.right = self.Element(postfix.pop())
-            if self.isOperator(element.right.form): self.setTree(element.right, postfix)
+            if self.is_operator(element.right.form): self.setr_tree(element.right, postfix)
         else:
             element.right = self.Element(postfix.pop())
-            if (self.isOperator(element.right.form)): self.setTree(element.right, postfix)
+            if (self.is_operator(element.right.form)): self.set_tree(element.right, postfix)
             element.left = self.Element(postfix.pop())
-            if (self.isOperator(element.left.form)): self.setTree(element.left, postfix)
+            if (self.is_operator(element.left.form)): self.set_tree(element.left, postfix)
 
 
     def show(self):
-        self.showTree(self.root)
+        self.show_tree(self.root)
 
 
-    def showTree(self, element):
+    def show_tree(self, element):
         print(element.form)
-        if element.left != None: self.showTree(element.left)
-        if element.right != None: self.showTree(element.right)
+        if element.left != None: self.show_tree(element.left)
+        if element.right != None: self.show_tree(element.right)
 
-    # test
-    '''
-    def showTree2(self, element):
-        if element is not None:
-            print(element.form)
-            self.showTree2(element.left)
-            self.showTree2(element.right)
-    '''

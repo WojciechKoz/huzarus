@@ -9,19 +9,19 @@ class InfixToPostfix:
 
     def convert(self):
         for element in self.infix:
-            if not self.isOperator(element):
+            if not self.is_operator(element):
                 self.postfix.append(element)
-            else: self.proccessOperator(element)
+            else: self.proccess_operator(element)
         while self.stack:
             self.postfix.append(self.stack.pop())
         return self.postfix
 
 
-    def isOperator(self, op):
+    def is_operator(self, op):
         return op in ("or", "and", "not", "(", ")")
 
 
-    def proccessOperator(self, op):
+    def proccess_operator(self, op):
         if op == '(': self.stack.append(op)
         elif op == ')':
             while self.stack and self.stack[-1] != '(':

@@ -1,5 +1,4 @@
 
-
 chop = lambda text, c: [text[:text.find(c)], c, text[text.find(c)+1:]]
 
 
@@ -10,12 +9,12 @@ def partial_split(form, char):
     return list(map(lambda elem: partial_split(elem, char), splitted))
 
 
-def flatten(l):
-    for el in l:
-        if type(el) in (list, tuple):
-            yield from flatten(el)
+def flatten(array):
+    for item in array:
+        if type(item) in (list, tuple):
+            yield from flatten(item)
         else:
-            yield el
+            yield item 
 
 
 def smart_split(form, splitted_by=("(", ")", " "), ignore=(" ",)):
