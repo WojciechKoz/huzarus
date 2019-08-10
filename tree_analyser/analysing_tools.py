@@ -62,5 +62,6 @@ def tree_valuation(tree):
         for leaf in leaves:
             leaf.value = variables_relation[leaf.form]
          
-        print(variables_relation, "gives", evaluate(tree.root))
+        print("{:40} gives {}".format(str(variables_relation), evaluate(tree.root)))
+
 
