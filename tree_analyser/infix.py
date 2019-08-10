@@ -18,7 +18,7 @@ class InfixToPostfix:
 
 
     def is_operator(self, op):
-        return op in ("or", "and", "not", "(", ")")
+        return op in ("or", "and", "not", "(", ")", "->", "<->")
 
 
     def proccess_operator(self, op):
@@ -38,9 +38,11 @@ class InfixToPostfix:
 
 
     def precedence(self, op):
-        if op == "not": return 3
-        elif op == "and": return 2
-        elif op == "or" : return 1
+        if op == "not": return 5
+        elif op == "and": return 4
+        elif op == "or" : return 3
+        elif op == "->" : return 2
+        elif op == "<->" : return 1
         else: return 0
 
 

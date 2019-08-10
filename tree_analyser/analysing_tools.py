@@ -5,8 +5,8 @@ import pandas as pd
 conjunctions = {    # you can change second element of each pair 
     "and": "and",   # it depends on input e.g. when you use ^ as 'and' operator
     "or" : "or",    # then it will be "and":"^"
-    "imp": "imp",
-    "iff": "iif",
+    "imp": "->",
+    "iff": "<->",
     "not": "not"
 }
 
@@ -15,7 +15,7 @@ functions = {
     conjunctions["or"] : lambda a, b: a or b,
     conjunctions["imp"]: lambda a, b: not a or b,
     conjunctions["iff"]: lambda a, b: a == b,  
-    conjunctions["not"]: lambda _, a: not a # we ignore second argument
+    conjunctions["not"]: lambda _, a: not a # we ignore first argument
 }
 
 # checks if given element of tree is a leaf (has no children)
@@ -41,14 +41,37 @@ def clear_old_values(current):
         clear_old_values(current.right)
 
 
-def evaluate(current):
+def add_nodes(current, table):
+    if is_leaf(current): return None # leaves have already been included 
+
+    if current.left is None:
+        add_nodes(current.right, table)
+        current.describe = describe(current).rstrip(" ")
+        table[current.describe] = []
+    elif is_leaf(current.left) and is_leaf(current.right):
+        current.describe = describe(current).rstrip(" ")
+        table[current.describe] = []
+    else:
+        add_nodes(current.left, table)
+        add_nodes(current.right, table)
+        current.describe = describe(current).rstrip(" ")
+        table[current.describe] = []
+
+
+def describe(element):
+    if element is None:
+        return "" 
+    return describe(element.left) + element.form +" "+ describe(element.right)
+
+
+def evaluate(current, table):
     """ sets a boolean value for each element in tree """
     if current is None: return None
     if current.form in conjunctions.values():
-        elem_value = functions[current.form](evaluate(current.left), evaluate(current.right))
+        elem_value = functions[current.form](evaluate(current.left, table), evaluate(current.right, table))
+        table[current.describe].append(elem_value)
         current.value = elem_value # that's a bonus when you want to show all elems value
     return current.value
-
 
 
 def tree_valuation(tree):
@@ -59,8 +82,7 @@ def tree_valuation(tree):
     variables_names = {var.form for var in leaves}
 
     output = {var_name:[] for var_name in variables_names}
-    output["result"] = []
-
+    add_nodes(tree.root, output)
     for variables_values in product([False, True], repeat=len(variables_names)):
         variables_relation = {key:value for key, value in zip(variables_names, variables_values)}
 
@@ -70,7 +92,8 @@ def tree_valuation(tree):
 
         for name, value in variables_relation.items():
             output[name].append(value)
-        output["result"].append(evaluate(tree.root)) 
+        evaluate(tree.root, output)
+        # update_table(tree.root, output)
 
     return pd.DataFrame(output)
 

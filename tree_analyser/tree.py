@@ -6,6 +6,7 @@ class PropositionalFormulaTree:
             self.left = None
             self.right = None
             self.value = None # boolean value of element
+            self.describe = ""
 
 
     def __init__(self, postfix):
@@ -23,7 +24,7 @@ class PropositionalFormulaTree:
     def set_tree(self, element, postfix):
         if element.form == "not":
             element.right = self.Element(postfix.pop())
-            if self.is_operator(element.right.form): self.setr_tree(element.right, postfix)
+            if self.is_operator(element.right.form): self.set_tree(element.right, postfix)
         else:
             element.right = self.Element(postfix.pop())
             if (self.is_operator(element.right.form)): self.set_tree(element.right, postfix)
