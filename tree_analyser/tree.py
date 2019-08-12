@@ -13,10 +13,11 @@ class PropositionalFormulaTree:
 
     def __init__(self, postfix):
         self.root = self.Element(postfix.pop())
-        self.root.right = self.Element(postfix.pop())
-        if is_operator(self.root.right.form):  self.set_tree(self.root.right, postfix)
-        self.root.left = self.Element(postfix.pop())
-        if is_operator(self.root.left.form):  self.set_tree(self.root.left, postfix)
+        if len(postfix) > 2:
+            self.root.right = self.Element(postfix.pop())
+            if is_operator(self.root.right.form):  self.set_tree(self.root.right, postfix)
+            self.root.left = self.Element(postfix.pop())
+            if is_operator(self.root.left.form):  self.set_tree(self.root.left, postfix)
 
     def set_tree(self, element, postfix):
         if element.form == "not":
