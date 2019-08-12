@@ -5,8 +5,8 @@ import pandas as pd
 conjunctions = {    # you can change second element of each pair 
     "and": "and",   # it depends on input e.g. when you use ^ as 'and' operator
     "or": "or",    # then it will be "and":"^"
-    "implies": "->",
-    "equals": "<->",
+    "implies": "implies",
+    "equals": "equals",
     "not": "not"
 }
 
