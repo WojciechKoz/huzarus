@@ -15,7 +15,7 @@ functions = {
     conjunctions["or"]: lambda a, b: a or b,
     conjunctions["implies"]: lambda a, b: not a or b,
     conjunctions["equals"]: lambda a, b: a == b,
-    conjunctions["not"]: lambda _, a: not a# we ignore first argument
+    conjunctions["not"]: lambda _, a: not a  # we ignore first argument
 }
 
 # checks if given element of tree is a leaf (has no children)
@@ -42,7 +42,7 @@ def clear_old_values(current):
 
 
 def add_nodes(current, table):
-    if is_leaf(current): return None # leaves have already been included 
+    if is_leaf(current): return None  # leaves have already been included
 
     if current.left is None:
         add_nodes(current.right, table)
@@ -61,7 +61,7 @@ def add_nodes(current, table):
 def describe(element):
     if element is None:
         return "" 
-    return describe(element.left) + element.form +" "+ describe(element.right)
+    return describe(element.left) + element.form + " " + describe(element.right)
 
 
 def evaluate(current, table):
@@ -70,7 +70,7 @@ def evaluate(current, table):
     if current.form in conjunctions.values():
         elem_value = functions[current.form](evaluate(current.left, table), evaluate(current.right, table))
         table[current.describe].append(elem_value)
-        current.value = elem_value # that's a bonus when you want to show all elems value
+        current.value = elem_value  # that's a bonus when you want to show all elements value
     return current.value
 
 

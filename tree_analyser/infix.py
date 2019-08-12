@@ -2,27 +2,20 @@ def precedence(op):
     """ returns precedence of operator """
     if op == "not":
         return 5
-    elif op == "and":
+    elif op == "equals":
         return 4
-    elif op == "or":
+    elif op == "implies":
         return 3
-    elif op == "->":
+    elif op == "and":
         return 2
-    elif op == "<->":
+    elif op == "or":
         return 1
     else:
         return 0
-    ''' alternative form for that function :
-    operator_values = {"not":5, "and":4, "or":3, "->":2, "<->":1}
-    # first check default situation
-    if op not in operators_values.keys():
-        return 0
-    return operators_values[op] # if op is an operator then returns his value
-    '''
 
 
 def is_operator(op):
-    return op in ("or", "and", "not", "(", ")", "->", "<->")
+    return op in ("or", "and", "not", "(", ")", "implies", "equals")
 
 
 class InfixToPostfix:
