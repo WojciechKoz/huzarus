@@ -12,10 +12,17 @@ def precedence(op):
         return 1
     else:
         return 0
+    ''' alternative form for that function :
+    operator_values = {"not":5, "and":4, "or":3, "->":2, "<->":1}
+    # first check default situation
+    if op not in operators_values.keys():
+        return 0
+    return operators_values[op] # if op is an operator then returns his value
+    '''
 
 
 def is_operator(op):
-    return op in ("or", "and", "not", "(", ")", "implies", "equals")
+    return op in ("or", "and", "not", "(", ")", "->", "<->")
 
 
 class InfixToPostfix:
