@@ -22,7 +22,7 @@ def precedence(op):
 
 
 def is_operator(op):
-    return op in ("or", "and", "not", "(", ")", "->", "<->")
+    return op in ("or", "and", "not", "(", ")", "implies", "equals")
 
 
 class InfixToPostfix:

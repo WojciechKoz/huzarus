@@ -5,16 +5,16 @@ import pandas as pd
 conjunctions = {    # you can change second element of each pair 
     "and": "and",   # it depends on input e.g. when you use ^ as 'and' operator
     "or": "or",    # then it will be "and":"^"
-    "implies": "->",
-    "equals": "<->",
+    "imp": "implies",
+    "iff": "equals",
     "not": "not"
 }
 
 functions = {
     conjunctions["and"]: lambda a, b: a and b,
     conjunctions["or"]: lambda a, b: a or b,
-    conjunctions["implies"]: lambda a, b: not a or b,
-    conjunctions["equals"]: lambda a, b: a == b,
+    conjunctions["imp"]: lambda a, b: not a or b,
+    conjunctions["iff"]: lambda a, b: a == b,
     conjunctions["not"]: lambda _, a: not a# we ignore first argument
 }
 
