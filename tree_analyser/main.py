@@ -8,4 +8,18 @@ from converter import convert
 # form = "(a or b) and (a or not c)" # if you are lazy when you have to again type new form
 form = input("enter form> ")
 B = PropositionalFormulaTree(convert(smart_split(form)))
-print(tree_valuation(B))
+table = tree_valuation(B)
+print(table)
+print([item for item in table[form]])
+
+form = input("enter form> ")
+B = PropositionalFormulaTree(convert(smart_split(form)))
+table = tree_valuation(B)
+print(table)
+print([item for item in table[form]])
+
+form = input("enter form> ")
+B = PropositionalFormulaTree(convert(smart_split(form)))
+table = tree_valuation(B)
+print(table)
+print([item for item in table[form]])

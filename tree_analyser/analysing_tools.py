@@ -22,11 +22,14 @@ functions = {
 is_leaf = lambda elem: not (elem.left or elem.right)
 
 
-def find_tree_leaves(current, leaves=[]):
+def find_tree_leaves(current, leaves=None):
     """ returns all leaves in given tree as a list """
+    if leaves is None: leaves = []
+
     if current is not None:
         if is_leaf(current):
             leaves.append(current)
+            return leaves
         else:
             find_tree_leaves(current.left, leaves)
             find_tree_leaves(current.right, leaves)

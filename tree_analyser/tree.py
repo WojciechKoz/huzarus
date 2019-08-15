@@ -51,7 +51,7 @@ class PropositionalFormulaTree:
         self.root = self.set_tree(formula)
 
     def set_tree(self, formula):
-        print(formula)
+        # print(formula)
         if len(formula) is 1:
             return self.Element(formula[0])
         if formula[0] == "(" and formula[-1] == ")":

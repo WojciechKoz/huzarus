@@ -17,6 +17,8 @@ def flatten(array):
 
 
 def smart_split(form, splitted_by=("(", ")", " "), ignore=(" ",)):
+    if type(form) is not str: raise ValueError('form has to be string')
+
     form = [form]
     for char in splitted_by:
         form = [partial_split(text, char) for text in form]
