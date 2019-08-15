@@ -1,4 +1,10 @@
-from infix import precedence
+# from infix import precedence # missing infix module
+
+def precedence(op):
+    operators = {"equals":1, "implies":2, "or":3, "and":4, "not":5}
+    if op not in operators.keys():
+        return 0
+    return operators[op]
 
 
 def is_operator(op):
