@@ -1,6 +1,3 @@
-# from infix import precedence # missing infix module
-
-
 def precedence(op):
     operators = {"equals": 1, "implies": 2, "or": 3, "and": 4, "not": 5}
     if op not in operators.keys():
@@ -18,8 +15,8 @@ def find_operator_alpha(formula):
     brackets = 0
     i = 0
     while i < len(formula):
-        print(i, len(formula))
         if formula[i] == "(":
+            start = i
             brackets += 1
             while brackets > 0:
                 i += 1
@@ -27,6 +24,8 @@ def find_operator_alpha(formula):
                     brackets += 1
                 elif formula[i] == ")":
                     brackets -= 1
+            if start == 0 and i == len(formula) - 1:
+                return True
         if is_operator(formula[i]):
             if top_index is None:
                 top_index = i
@@ -53,12 +52,11 @@ class PropositionalFormulaTree:
         self.root = self.set_tree(formula)
 
     def set_tree(self, formula):
-        # print(formula)
+        alpha = find_operator_alpha(formula)
         if len(formula) is 1:
             return self.Element(formula[0])
-        if formula[0] == "(" and formula[-1] == ")":
+        if alpha is True:
             return self.set_tree(formula[1:][:-1])
-        alpha = find_operator_alpha(formula)
         current = self.Element(formula[alpha])
         if current.form != "not":
             current.left = self.set_tree(formula[:alpha])  # set subtree for left side of formula
