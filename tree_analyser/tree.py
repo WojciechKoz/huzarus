@@ -18,6 +18,7 @@ def find_operator_alpha(formula):
     brackets = 0
     i = 0
     while i < len(formula):
+        print(i, len(formula))
         if formula[i] == "(":
             brackets += 1
             while brackets > 0:
