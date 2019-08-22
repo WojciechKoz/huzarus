@@ -1,7 +1,9 @@
 from vienn import vienn
-from relations import ran
+from relations import is_quasireflexive
 
-print(ran({("a", "b"), ("a", "c")}))
+print(is_quasireflexive({("a", "a")}))
+print(is_quasireflexive({("a", "b", "a"), ("b", "t", "b"), ("a", "a", "a")}))
+
 """
 A = {1, 2, 3, 4, 5, 6, 'e', 'f', '*', '&',}
 B = {'a', 'b', 'c', 'd', 'e', 'f', 1, 2, '*', '&'}
