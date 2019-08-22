@@ -18,7 +18,7 @@ def ran(relation):
 
 
 def is_reflexive(relation):
-    """ checks if relations is reflexive """
+    """ checks if relations is reflexive (for all x in X, xRx) """
     if type(relation) is set and all(map(lambda elem:
                                          type(elem) is tuple and len(elem) == len(next(iter(relation))), relation)):
         elements = []
@@ -38,7 +38,7 @@ def is_reflexive(relation):
 
 
 def is_irreflexive(relation):
-    """ checks if relations is irreflexive """
+    """ checks if relations is irreflexive (for no x in X, xRx) """
     if type(relation) is set and all(map(lambda elem:
                                          type(elem) is tuple and len(elem) == len(next(iter(relation))), relation)):
         elements = []
@@ -55,7 +55,7 @@ def is_irreflexive(relation):
 
 
 def is_coreflexive(relation):
-    """ checks if relations is coreflexive """
+    """ checks if relations is coreflexive (for all x and y in X, if xRy then x = y) """
     if type(relation) is set and all(map(lambda elem:
                                          type(elem) is tuple and len(elem) == len(next(iter(relation))), relation)):
         for tuple_ in relation:
@@ -67,18 +67,23 @@ def is_coreflexive(relation):
 
 
 def is_quasireflexive(relation):
-    """ checks if relations is quasi-reflexive """
+    """ checks if relations is quasi-reflexive (for all x and y in X, if xRy then xRx and yRy) """
     if type(relation) is set and all(map(lambda elem:
                                          type(elem) is tuple and len(elem) == len(next(iter(relation))), relation)):
         elements = [list() for x in range(len(next(iter(relation))))]
         i = 0
-        for tuple_ in relation:
+        for tuple_ in relation:  # creating lists of elements to check
             for element in tuple_:
                 if element not in elements[i]:
                     elements[i].append(element)
                 i += 1
             i = 0
-        for list_ in elements:
+
+        for i in range(len(elements)):  # removing doubled lists of elements
+            if elements[i] in elements[:i]:
+                elements.pop(i)
+
+        for list_ in elements:  # property checking
             for tuple_ in relation:
                 if tuple_[0] == tuple_[-1] and tuple_[0] in list_:
                     list_.remove(tuple_[0])
