@@ -1,7 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
+from matplotlib.patches import Circle, Wedge
 from matplotlib.collections import PatchCollection
+from converter import convert_sets_to_bool
+from smart_split import smart_split
+from _main_truth_tab import truth_table
+from time import time
 
 
 class DoubleManager:
@@ -99,13 +103,16 @@ class TripleManager:
         plt.xlim(-0.4, 0.4)
         plt.ylim(-0.3, 0.5)
 
+
     def slots(self):
         return self.A_slots[:len(self.A)], self.B_slots[:len(self.B)], self.C_slots[:len(self.C)], \
                self.AB_slots[:len(self.AB)], self.AC_slots[:len(self.AC)], self.BC_slots[:len(self.BC)], \
                self.ABC_slots[:len(self.ABC)]
 
+
     def subsets(self, idx):
         return list([self.A, self.B, self.C, self.AB, self.AC, self.BC, self.ABC])[idx]
+
 
     @staticmethod
     def write_sets_names(names):
@@ -118,3 +125,54 @@ class TripleManager:
         plt.text(0.2, 0.17, names[1] + names[2], ha='center', va='center', fontsize=15)
 
         plt.text(0, 0.08, names[0] + names[1] + names[2], ha='center', va='center', fontsize=15)
+
+
+class DoubleAreaManager:
+    def __init__(self, table, variables):
+        self.table = table
+        self.vars = variables
+
+        self.in_circle_A = lambda x, y: (x+0.3)**2 + y**2 < 0.5**2 
+        self.in_circle_B = lambda x, y: (x-0.3)**2 + y**2 < 0.5**2 
+
+        self.in_A =  lambda x, y: self.in_circle_A(x, y) and not self.in_circle_B(x, y)
+        self.in_B =  lambda x, y: self.in_circle_B(x, y) and not self.in_circle_A(x, y)
+        self.in_AB = lambda x, y: self.in_circle_B(x, y) and self.in_circle_A(x, y)
+
+        self.value_A = self.predict([(self.vars[0], True), (self.vars[1], False)])
+        self.value_B = self.predict([(self.vars[0], False), (self.vars[1], True)])
+        self.value_AB = self.predict([(self.vars[0], True), (self.vars[1], True)])
+
+
+    def predict(self, args):
+        filtered = self.table.copy()
+        for arg in args:
+            filtered = filtered[filtered[arg[0]] == arg[1]]
+        return np.ravel(filtered.values)[-1]
+
+
+    def color(self, vector):
+        ''' A, B aren't a real name of sets in vienn diagram
+            I'm using those names only to predict in which set representation 
+            the following point is '''
+        start = time()
+        for point in vector:
+            if self.in_A(*point):
+                yield self.value_A
+            elif self.in_B(*point):
+                yield self.value_B
+            elif self.in_AB(*point):
+                yield self.value_AB
+            else:
+                yield False
+        print('time:', time() - start)
+
+
+    @staticmethod
+    def draw_circles(ax):
+        circle_a = Wedge((-0.3, 0), 0.5, 0, 360, width=0.01,color='black', alpha=0.5)
+        circle_b = Wedge((0.3, 0), 0.5, 0, 360, width=0.01, color='black', alpha=0.5)
+
+        ax.add_artist(circle_a)
+        ax.add_artist(circle_b)
+

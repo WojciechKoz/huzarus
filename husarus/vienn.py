@@ -1,6 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from vienn_managers import DoubleManager, TripleManager
+from matplotlib.colors import ListedColormap
+from vienn_managers import DoubleManager, TripleManager, DoubleAreaManager
+from _main_truth_tab import truth_table
+from smart_split import smart_split
+from converter import convert_sets_to_bool
 
 
 def plot_regions_with_elements(manager, sets, names):
@@ -26,15 +30,11 @@ def plot_regions_with_elements(manager, sets, names):
     plt.show()
 
 
-def plot_decision_regions(manager, resolution=0.01):
-    if resolution <= 0:
-        raise ValueError("Resolution has to be positive number")
+def plot_regions(manager, resolution=0.01):
 
-    colors = ('grey', 'blue', 'yellow')
-
-    x_min, x_max = -0.5, 0.5
-    y_min, y_max = -0.5, 0.5
-
+    x_min, x_max = -1.0, 1.0
+    y_min, y_max = -1.0, 1.0
+    cmap = ListedColormap(('red', 'green'))
     # creates two matrixes of the range between min and max on each axis
     # vertical = [[min, min+resolution, min+2*resolution ...],
     #             [min, min+resolution, min+2*resolution ...], ...]
@@ -46,14 +46,17 @@ def plot_decision_regions(manager, resolution=0.01):
                                        np.arange(y_min, y_max, resolution))
     vector_input = np.array([vertical.ravel(), horizontal.ravel()]).T
 
-    # predicts every pair from xy plane and reshapes it to original shape
-    Z = manager.color(vector_input)
+    Z = np.array(list(manager.color(vector_input)))
+    print('Z:',Z)
+    Z = Z.reshape(1, len(Z))
     Z = Z.reshape(vertical.shape)
 
     # fills background 
     plt.contourf(vertical, horizontal, Z, alpha=0.4, cmap=cmap)
     plt.xlim(vertical.min(), vertical.max())
     plt.ylim(horizontal.min(), horizontal.max())
+    _, ax = plt.subplots()
+    manager.draw_circles(ax) 
 
     plt.show()
 
@@ -61,6 +64,17 @@ def plot_decision_regions(manager, resolution=0.01):
 
 def vienn(*sets, names=None):
     """ runs plot_regions with some manager depends on sets amount """
+    if len(sets) == 1 and type(sets[0]) is str:
+        items = smart_split(sets[0])
+        items = convert_sets_to_bool(items) 
+        table, variables = truth_table(items)
+        print(variables)
+        if len(variables) == 2:
+            plot_regions(DoubleAreaManager(table, variables))
+        elif len(variables) == 3:
+            plot_regions(TripleAreaManager(table, variables))
+        else:
+            raise ValueError('wrong amount of sets')
     if len(sets) == 2:
         names = ['A', 'B'] if not names else names
         plot_regions_with_elements(DoubleManager(*sets), sets, names)

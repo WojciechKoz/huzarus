@@ -98,5 +98,5 @@ def tree_valuation(tree):
         evaluate(tree.root, output)
         # update_table(tree.root, output)
 
-    return pd.DataFrame(output)
+    return pd.DataFrame(output), [leaf.form for leaf in leaves]
 
