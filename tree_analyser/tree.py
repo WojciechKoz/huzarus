@@ -2,14 +2,14 @@
 
 
 def precedence(op):
-    operators = {"equals": 1, "implies": 2, "or": 3, "and": 4, "not": 5}
+    operators = {"equals": 1, "implies": 2, "or" and "xor": 3, "and": 4, "not": 5}
     if op not in operators.keys():
         return 0
     return operators[op]
 
 
 def is_operator(op):
-    return op in ("or", "and", "not", "implies", "equals")
+    return op in ("or", "xor", "and", "not", "implies", "equals")
 
 
 def find_operator_alpha(formula):
