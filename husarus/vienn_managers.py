@@ -183,3 +183,97 @@ class DoubleAreaManager:
         plt.text(0.4, 0, self.vars[1], ha='center', va='center', fontsize=15)
         plt.text(0, 0, self.vars[0]+self.vars[1], ha='center', va='center', fontsize=15)
 
+
+class TripleAreaManager:
+    def __init__(self, table, variables):
+        self.table = table
+        self.vars = variables
+
+        self.in_circle_A = lambda x, y: (x+0.3)**2 + (y+0.15)**2 < 0.5**2 
+        self.in_circle_B = lambda x, y: (x-0.3)**2 + (y+0.15)**2 < 0.5**2 
+        self.in_circle_C = lambda x, y: (x)**2 + (y-0.35)**2 < 0.5**2 
+
+        self.in_A =  lambda x, y: \
+                self.in_circle_A(x, y) and not self.in_circle_B(x, y) and not self.in_circle_C(x, y)
+
+        self.in_B =  lambda x, y: \
+                self.in_circle_B(x, y) and not self.in_circle_A(x, y) and not self.in_circle_C(x, y)
+
+        self.in_C =  lambda x, y: \
+                self.in_circle_C(x, y) and not self.in_circle_A(x, y) and not self.in_circle_B(x, y)
+
+        self.in_AB = lambda x, y: \
+                self.in_circle_B(x, y) and self.in_circle_A(x, y) and not self.in_circle_C(x, y)
+
+        self.in_AC = lambda x, y: \
+                self.in_circle_A(x, y) and self.in_circle_C(x, y) and not self.in_circle_B(x, y)
+
+        self.in_BC = lambda x, y: \
+                self.in_circle_B(x, y) and self.in_circle_C(x, y) and not self.in_circle_A(x, y)
+
+        self.in_ABC = lambda x, y: \
+                self.in_circle_A(x, y) and self.in_circle_B(x, y) and self.in_circle_C(x, y)
+
+        self.value_U = self.predict([(self.vars[0], False), (self.vars[1], False), (self.vars[2], False)])
+        self.value_A = self.predict([(self.vars[0], True), (self.vars[1], False), (self.vars[2], False)])
+        self.value_B = self.predict([(self.vars[0], False), (self.vars[1], True), (self.vars[2], False)])
+        self.value_C = self.predict([(self.vars[0], False), (self.vars[1], False), (self.vars[2], True)])
+        self.value_AB = self.predict([(self.vars[0], True), (self.vars[1], True), (self.vars[2], False)])
+        self.value_AC = self.predict([(self.vars[0], True), (self.vars[1], False), (self.vars[2], True)])
+        self.value_BC = self.predict([(self.vars[0], False), (self.vars[1], True), (self.vars[2], True)])
+        self.value_ABC = self.predict([(self.vars[0], True), (self.vars[1], True), (self.vars[2], True)])
+
+
+    def predict(self, args):
+        filtered = self.table.copy()
+        for arg in args:
+            filtered = filtered[filtered[arg[0]] == arg[1]]
+        return np.ravel(filtered.values)[-1]
+
+
+    def color(self, vector):
+        ''' A, B aren't a real name of sets in vienn diagram
+            I'm using those names only to predict in which set representation 
+            the following point is '''
+        start = time()
+        for point in vector:
+            if self.in_A(*point):
+                yield self.value_A
+            elif self.in_B(*point):
+                yield self.value_B
+            elif self.in_C(*point):
+                yield self.value_C
+            elif self.in_AB(*point):
+                yield self.value_AB
+            elif self.in_AC(*point):
+                yield self.value_AC
+            elif self.in_BC(*point):
+                yield self.value_BC
+            elif self.in_ABC(*point):
+                yield self.value_ABC
+            else:
+                yield self.value_U 
+        print('time:', time() - start)
+
+
+    @staticmethod
+    def draw_circles(fig):
+        circle_a = Wedge((-0.3, -0.15), 0.5, 0, 360, width=0.01,color='black', alpha=0.5)
+        circle_b = Wedge((0.3, -0.15), 0.5, 0, 360, width=0.01, color='black', alpha=0.5)
+        circle_c = Wedge((0, 0.35), 0.5, 0, 360, width=0.01, color='black', alpha=0.5)
+
+        fig.add_artist(circle_a)
+        fig.add_artist(circle_b)
+        fig.add_artist(circle_c)
+
+
+    def write_sets_names(self):
+        plt.text(-0.5, -0.15, self.vars[0], ha='center', va='center', fontsize=15)
+        plt.text(0.5, -0.15, self.vars[1], ha='center', va='center', fontsize=15)
+        plt.text(0, 0.65, self.vars[2], ha='center', va='center', fontsize=15)
+
+        plt.text(0, -0.3, self.vars[0]+self.vars[1], ha='center', va='center', fontsize=15)
+        plt.text(-0.3, 0.15, self.vars[0]+self.vars[2], ha='center', va='center', fontsize=15)
+        plt.text(0.3, 0.15, self.vars[1]+self.vars[2], ha='center', va='center', fontsize=15)
+
+        plt.text(0, 0, self.vars[0]+self.vars[1]+self.vars[2], ha='center', va='center', fontsize=15)

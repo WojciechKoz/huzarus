@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-from vienn_managers import DoubleManager, TripleManager, DoubleAreaManager
+from vienn_managers import DoubleManager, TripleManager, DoubleAreaManager, TripleAreaManager
 from _main_truth_tab import truth_table
 from smart_split import smart_split
 from converter import convert_sets_to_bool
