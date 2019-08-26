@@ -139,6 +139,7 @@ class DoubleAreaManager:
         self.in_B =  lambda x, y: self.in_circle_B(x, y) and not self.in_circle_A(x, y)
         self.in_AB = lambda x, y: self.in_circle_B(x, y) and self.in_circle_A(x, y)
 
+        self.value_U = self.predict([(self.vars[0], False), (self.vars[1], False)])
         self.value_A = self.predict([(self.vars[0], True), (self.vars[1], False)])
         self.value_B = self.predict([(self.vars[0], False), (self.vars[1], True)])
         self.value_AB = self.predict([(self.vars[0], True), (self.vars[1], True)])
@@ -164,15 +165,21 @@ class DoubleAreaManager:
             elif self.in_AB(*point):
                 yield self.value_AB
             else:
-                yield False
+                yield self.value_U 
         print('time:', time() - start)
 
 
     @staticmethod
-    def draw_circles(ax):
+    def draw_circles(fig):
         circle_a = Wedge((-0.3, 0), 0.5, 0, 360, width=0.01,color='black', alpha=0.5)
         circle_b = Wedge((0.3, 0), 0.5, 0, 360, width=0.01, color='black', alpha=0.5)
 
-        ax.add_artist(circle_a)
-        ax.add_artist(circle_b)
+        fig.add_artist(circle_a)
+        fig.add_artist(circle_b)
+
+
+    def write_sets_names(self):
+        plt.text(-0.4, 0, self.vars[0], ha='center', va='center', fontsize=15)
+        plt.text(0.4, 0, self.vars[1], ha='center', va='center', fontsize=15)
+        plt.text(0, 0, self.vars[0]+self.vars[1], ha='center', va='center', fontsize=15)
 

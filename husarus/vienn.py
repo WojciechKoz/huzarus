@@ -30,7 +30,11 @@ def plot_regions_with_elements(manager, sets, names):
     plt.show()
 
 
-def plot_regions(manager, resolution=0.01):
+def plot_regions(manager, form, resolution=0.01):
+    fig = plt.subplot()
+
+    plt.xticks([]) # hides axis numbers
+    plt.yticks([])
 
     x_min, x_max = -1.0, 1.0
     y_min, y_max = -1.0, 1.0
@@ -47,17 +51,17 @@ def plot_regions(manager, resolution=0.01):
     vector_input = np.array([vertical.ravel(), horizontal.ravel()]).T
 
     Z = np.array(list(manager.color(vector_input)))
-    print('Z:',Z)
+    # print('Z:',Z)
     Z = Z.reshape(1, len(Z))
     Z = Z.reshape(vertical.shape)
 
     # fills background 
-    plt.contourf(vertical, horizontal, Z, alpha=0.4, cmap=cmap)
+    fig.contourf(vertical, horizontal, Z, alpha=0.4, cmap=cmap)
     plt.xlim(vertical.min(), vertical.max())
     plt.ylim(horizontal.min(), horizontal.max())
-    _, ax = plt.subplots()
-    manager.draw_circles(ax) 
-
+    manager.draw_circles(fig) 
+    manager.write_sets_names()
+    fig.set_title(form)
     plt.show()
 
 
@@ -70,9 +74,9 @@ def vienn(*sets, names=None):
         table, variables = truth_table(items)
         print(variables)
         if len(variables) == 2:
-            plot_regions(DoubleAreaManager(table, variables))
+            plot_regions(DoubleAreaManager(table, variables), sets[0])
         elif len(variables) == 3:
-            plot_regions(TripleAreaManager(table, variables))
+            plot_regions(TripleAreaManager(table, variables), sets[0])
         else:
             raise ValueError('wrong amount of sets')
     if len(sets) == 2:
