@@ -7,6 +7,6 @@ vienn(A, B, C)
 input()
 #  vienn(A, B)
 '''
-form = "not(A inter B) - C"
+form = input('enter form> ')
 print(form)
 vienn(form)
