@@ -1,10 +1,9 @@
 from vienn import vienn
-from relations import is_reflexive
+from relations import Relation
+from relations import union
 
-print(is_reflexive({("a", "a")}))
-print(is_reflexive({("a", "b"), ("b", "c"), ("a", "c")}, {"a", "b"}, {"b", "c", "d"}))
-print(is_reflexive({("a", "b"), ("b", "c"), ("a", "c")}, {"a", "b", "c"}))
-print(is_reflexive({("a", "b"), ("b", "c"), ("a", "c")}, {"a", "b"}, {"b", "c", "t"}))
+print(union(Relation({}), Relation({("a", "b")})))
+
 
 """
 A = {1, 2, 3, 4, 5, 6, 'e', 'f', '*', '&',}
