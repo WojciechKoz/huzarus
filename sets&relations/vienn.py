@@ -8,7 +8,7 @@ def plot_regions(manager, sets, names):
 
     manager.draw_circles() # draws representations of sets (big circles)
 
-    plt.xticks([]) # hides axis numbers
+    plt.xticks([])  # hides axis numbers
     plt.yticks([])
 
     points = manager.slots() # split sets e.g. (A, B) -> (A-B, AB, B-A)

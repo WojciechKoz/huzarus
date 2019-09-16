@@ -1,9 +1,9 @@
 from vienn import vienn
-from relations import Relation
-from relations import union
+from relations import *
+from relation_graph import render_relation
 
-print(union(Relation({}), Relation({("a", "b")})))
-
+R = Relation({("a", "b"), ("b", "c")})
+render_relation(R)
 
 """
 A = {1, 2, 3, 4, 5, 6, 'e', 'f', '*', '&',}
