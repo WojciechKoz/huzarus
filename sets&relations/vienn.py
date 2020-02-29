@@ -35,7 +35,7 @@ def plot_decision_regions(manager, resolution=0.01):
     x_min, x_max = -0.5, 0.5
     y_min, y_max = -0.5, 0.5
 
-    # creates two matrixes of the range between min and max on each axis
+    # creates two matrices of the range between min and max on each axis
     # vertical = [[min, min+resolution, min+2*resolution ...],
     #             [min, min+resolution, min+2*resolution ...], ...]
     # horizontal = [[min, min, min, ...],

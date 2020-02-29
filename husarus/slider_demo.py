@@ -4,7 +4,7 @@ from matplotlib.widgets import Slider, Button, RadioButtons
 from clustering import cluster_loop
 
 fig, ax = plt.subplots()
-scat = ax.scatter(?)
+scat = ax.scatter()
 
 # plt.subplots_adjust(left=0.25, bottom=0.25)
 # ax.margins(x=0)
