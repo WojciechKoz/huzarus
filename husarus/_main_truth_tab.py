@@ -5,17 +5,16 @@ from converter import convert
 
 
 
-def truth_table(items):
+def preliminary_processing(form):
+    return convert(smart_split(form))
+
+def truth_table(form):
+    items = preliminary_processing(form)
     tree = PropositionalFormulaTree(items)
     table, variables = tree_valuation(tree)
     return table, variables
 
 
-def preliminary_processing(form):
-    return convert(smart_split(form))
-
-
-
 if __name__ == "__main__":
     form = input("enter form> ")
-    print(truth_table(preliminary_processing(form))[0])
+    print(truth_table(form)[0])
