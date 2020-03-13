@@ -1,14 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-from vienn_managers import DoubleManager, TripleManager, DoubleAreaManager, TripleAreaManager
+from venn_managers import DoubleManager, TripleManager, DoubleAreaManager, TripleAreaManager
 from _main_truth_tab import truth_table
 from smart_split import smart_split
 from converter import convert_sets_to_bool
 
 
 def plot_regions_with_elements(manager, sets, names):
-    ''' draws vienn diagram using matplotlib library and given manager '''
+    ''' draws venn diagram using matplotlib library and given manager '''
     manager.draw_circles() # draws representations of sets (big circles)
 
     plt.xticks([]) # hides axis numbers
@@ -23,7 +23,7 @@ def plot_regions_with_elements(manager, sets, names):
         for (x, y), value in zip(cluster, manager.subsets(idx)):
             plt.annotate(value, (x, y), ha='center', va='center', c='white')
 
-    plt.title('Vienn diagram')
+    plt.title('Venn diagram')
     manager.write_sets_names(names)  # prints name of each set
     plt.gca().set_aspect('equal', adjustable='box')  # keeps square shape of diagram
     # plt.axis('scaled')
@@ -66,7 +66,7 @@ def plot_regions(manager, form, resolution=0.01):
 
 
 
-def vienn(*sets, names=None):
+def venn(*sets, names=None):
     """ runs plot_regions with some manager depends on sets amount """
     if len(sets) == 1 and type(sets[0]) is str:
         items = smart_split(sets[0])

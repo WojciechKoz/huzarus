@@ -1,12 +1,13 @@
-from vienn import vienn
-'''
+from venn import venn
+
 A = {1, 2, 3, 4, 5, 6, 'e', 'f', '*', '&',}
 B = {'a', 'b', 'c', 'd', 'e', 'f', 1, 2, '*', '&'}
 C = {'!', '@', '#', '$', '%', 'a', 'b', 3, '*', '&'}
-vienn(A, B, C)
+#venn(A, B, C)
 input()
-#  vienn(A, B)
+venn(A, B)
 '''
 form = input('enter form> ')
 print(form)
-vienn(form)
+venn(form)
+'''

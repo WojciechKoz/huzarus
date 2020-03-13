@@ -18,4 +18,4 @@ def preliminary_processing(form):
 
 if __name__ == "__main__":
     form = input("enter form> ")
-    print(truth_table(preliminary_processing(form)))
+    print(truth_table(preliminary_processing(form))[0])

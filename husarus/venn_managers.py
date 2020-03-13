@@ -9,7 +9,7 @@ from time import time
 
 
 class DoubleManager:
-    """ for vienn schema with only 2 sets, each set has to have at most 7 elements """
+    """ for venn schema with only 2 sets, each set has to have at most 7 elements """
 
     def __init__(self, set_a, set_b):
         self.A_slots = np.array([[-0.25, 0], [-0.225, 0.05], [-0.225, -0.05],
@@ -54,7 +54,7 @@ class DoubleManager:
 
 
 class TripleManager:
-    """ for vienn diagram with 3 sets, each set has to have at most 5 elements """
+    """ for venn diagram with 3 sets, each set has to have at most 5 elements """
 
     def __init__(self, set_a, set_b, set_c):
         self.A_slots = np.array([[-0.14, -0.15], [-0.2, -0.1], [-0.24, -0.03],
@@ -153,7 +153,7 @@ class DoubleAreaManager:
 
 
     def color(self, vector):
-        ''' A, B aren't a real name of sets in vienn diagram
+        ''' A, B aren't a real name of sets in venn diagram
             I'm using those names only to predict in which set representation 
             the following point is '''
         start = time()
@@ -232,7 +232,7 @@ class TripleAreaManager:
 
 
     def color(self, vector):
-        ''' A, B aren't a real name of sets in vienn diagram
+        ''' A, B aren't a real name of sets in venn diagram
             I'm using those names only to predict in which set representation 
             the following point is '''
         start = time()
