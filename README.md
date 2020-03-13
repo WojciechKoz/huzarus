@@ -1,11 +1,13 @@
 # huzarus
 ## Description
 
+Huzarus is a programm that aims to help you learn logic.
+
 ## Usage examples
 ### Venn diagrams
 
-venn takes string or sequence of sets (up to 3)
-It draws using matplotlib a visual representation of given sets
+venn as an input takes string or sequence of sets (up to 3)
+and draws using matplotlib a visual representation of given sets
 ```
 from venn import venn
 
@@ -25,8 +27,8 @@ venn(A, B, C)
 ![venn example photo no2](https://github.com/WojciechKoz/huzarus/blob/master/imgs/venn2.png)
 
 ### Truth table
-truth_table takes string (form) and returns tuple of pandas.DataFrame (represents truth table for given form) and 
-set of variables used in form. Form is a string representation of some logic formula e.g. "a and b => c"
+truth_table as an input takes string (form) and returns tuple of pandas.DataFrame (represents truth table for given form) and 
+set of variables used in form. Form is a string representation of some propositional formula e.g. "a and b => c"
 
 ```
 >>> truth_table('a and b => c')[0] # index 0 - shows only truth table
@@ -40,5 +42,4 @@ set of variables used in form. Form is a string representation of some logic for
 6   True   True  False     True              False
 7   True   True   True     True               True
 ```
-As we know from school, implication is false only when first argument is true and second is false. 
-We can easly check if our answer is correct however we can pass to that function even more complicated arguments.
+truth_table shows not only single answer for which values of arguments form is true or not but also every single subform, which tells us best order of solving given formula 
